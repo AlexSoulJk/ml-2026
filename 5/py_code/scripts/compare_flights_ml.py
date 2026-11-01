@@ -27,9 +27,9 @@ BEACON_ID = 0
 SOURCE_SEED = 42
 
 # Размеры текущего Solenoid. None = параметры фабрики, как при обучении.
-BEACON_RADIUS_M = 0.04
+BEACON_RADIUS_M = 0.06
 BEACON_LENGTH_M = 0.30
-BEACON_TURNS = 200
+BEACON_TURNS = 100
 BEACON_CURRENT_A = 0.5
 
 NOISE_RELATIVE_SIGMA = None  # None = как при обучении; например 0.01 = 1%
