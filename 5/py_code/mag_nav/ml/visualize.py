@@ -1,9 +1,11 @@
 """Графики из сохранённых CSV — обучение повторно не запускается."""
+
 from __future__ import annotations
 
 from pathlib import Path
 
 import matplotlib
+
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
@@ -111,7 +113,9 @@ def visualize_run(run_dir: str | Path) -> list[Path]:
     if bins_path.exists():
         bins = pd.read_csv(bins_path)
         if not bins.empty:
-            x = 0.5 * (bins["r_left_m"].to_numpy(dtype=float) + bins["r_right_m"].to_numpy(dtype=float))
+            x = 0.5 * (
+                bins["r_left_m"].to_numpy(dtype=float) + bins["r_right_m"].to_numpy(dtype=float)
+            )
             fig, ax = plt.subplots(figsize=(9, 5))
             for prefix in ("baseline", "corrected"):
                 for metric, style in [("mean", "-o"), ("p95", "--s")]:

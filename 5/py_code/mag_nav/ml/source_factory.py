@@ -5,6 +5,7 @@
 Новый класс должен реализовывать контракт из ``mag_nav.source.base.MagneticSource``.
 Физика существующего Solenoid не модифицируется.
 """
+
 from __future__ import annotations
 
 from collections.abc import Callable
@@ -26,10 +27,10 @@ def _default_solenoid_factory(beacon_id: int, rng: np.random.Generator) -> Magne
     траекторий.
     """
     del beacon_id  # ID отвечает за идентичность группы, параметры выбирает rng.
-    radius = float(rng.uniform(0.040, 0.065))
-    length = float(rng.uniform(0.070, 0.160))
-    n_turns = int(rng.integers(80, 161))
-    current = float(rng.uniform(0.65, 1.35))
+    radius = float(rng.uniform(0.040, 0.6))
+    length = float(rng.uniform(0.070, 1.0))
+    n_turns = int(rng.integers(20, 200))
+    current = float(rng.uniform(0.2, 4.0))
     return Solenoid(
         origin=np.zeros(3, dtype=np.float64),
         n_turns=n_turns,
@@ -52,6 +53,8 @@ def make_source(beacon_id: int, seed: int = 42) -> MagneticSource:
     if isinstance(factory, str):
         module_name, separator, attribute_name = factory.partition(":")
         if not separator or not module_name or not attribute_name:
-            raise ValueError("SOURCE_FACTORY в строковом виде должен быть 'module.path:factory_name'")
+            raise ValueError(
+                "SOURCE_FACTORY в строковом виде должен быть 'module.path:factory_name'"
+            )
         factory = getattr(import_module(module_name), attribute_name)
     return factory(int(beacon_id), rng)
